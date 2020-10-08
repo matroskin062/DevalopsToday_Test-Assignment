@@ -17,6 +17,7 @@ export default function Home() {
 
   return (
     <MainLayout>
+      a
       <PostList>
         {posts?.map((el: IPost) => (
           <Link
