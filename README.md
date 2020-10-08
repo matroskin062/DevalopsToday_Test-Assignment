@@ -6,6 +6,7 @@ Install dependencies:
 npm install
 #or
 yarn
+````
 
 Then, run the development server:
 
