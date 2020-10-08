@@ -1,3 +1,4 @@
+import { HYDRATE } from 'next-redux-wrapper';
 import { RootState } from './../store/store';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
@@ -11,7 +12,7 @@ export interface IPost {
 }
 
 export interface IPostsState {
-  posts: IPost[];
+  items: IPost[];
 }
 
 export interface IComment {
@@ -29,6 +30,11 @@ export interface IAddPostAction {
   payload: IPost;
 }
 
+export interface IHydrateAction {
+  type: typeof HYDRATE;
+  payload;
+}
+
 export type Thunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
@@ -36,4 +42,4 @@ export type Thunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-export type ActionTypes = ISetPostAction | IAddPostAction;
+export type ActionTypes = ISetPostAction | IAddPostAction | IHydrateAction;

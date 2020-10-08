@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import MainLayout from '../../components/MainLayout/MainLayout';
 import { IPost } from '../../interfaces/interfaces';
-import { addNewPost } from '../../store/actions/actions';
+import { addNewPost, addPost } from '../../store/actions/actions';
 import { Button, Input, Textarea } from '../../styles/NewPostStyle';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +22,7 @@ const NewPost = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const onSubmit = (data: IPost) => {
+  const onSubmit = async (data: IPost) => {
     dispatch(addNewPost(data));
     router.push('/');
   };

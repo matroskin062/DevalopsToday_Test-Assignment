@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { NextPage } from 'next';
 import React from 'react';
 import { getPost } from '../../api/api';
@@ -17,7 +16,6 @@ type PostProps = {
 };
 
 const Post: NextPage<PostProps> = ({ post }) => {
-  console.log(post);
   return (
     <MainLayout>
       <PostContent>

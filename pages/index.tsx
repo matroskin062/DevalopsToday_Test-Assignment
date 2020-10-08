@@ -1,25 +1,19 @@
 import Link from 'next/link';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import MainLayout from '../components/MainLayout/MainLayout';
 import { IPost } from '../interfaces/interfaces';
 import { getPosts } from '../store/actions/actions';
-import { RootState } from '../store/store';
+import { RootState, wrapper } from '../store/store';
 import { PostList, PostItem, PostTitle, Image } from '../styles/PostListStyles';
 
 export default function Home() {
-  const posts = useSelector<RootState, IPost[]>(({ posts }) => posts.posts);
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(getPosts());
-  }, []);
-
+  //@ts-ignore
+  const { items } = useSelector(({ posts }: RootState) => posts);
   return (
     <MainLayout>
-      a
       <PostList>
-        {posts?.map((el: IPost) => (
+        {items?.map((el: IPost) => (
           <Link
             href='/posts/[postId]'
             as={`/posts/${el.id}`}
@@ -35,3 +29,10 @@ export default function Home() {
     </MainLayout>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store }) => {
+    //@ts-ignore
+    await store.dispatch(getPosts());
+  }
+);

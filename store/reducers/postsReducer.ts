@@ -1,25 +1,26 @@
+import { HYDRATE } from 'next-redux-wrapper';
 import { SET_POSTS, ADD_POSTS } from './../actions/actions';
 import { IPostsState, ActionTypes } from './../../interfaces/interfaces';
-const initialState: IPostsState = {
-  posts: [],
-};
+import { AnyAction } from 'redux';
+const initialState: IPostsState = { items: [] };
 
-export const postsReducer = (
-  state = initialState,
-  action: ActionTypes
-): IPostsState => {
+const posts = (state = initialState, action: ActionTypes): IPostsState => {
   switch (action.type) {
     case SET_POSTS:
       return {
-        ...state,
-        posts: action.payload,
+        items: action.payload,
       };
     case ADD_POSTS:
       return {
         ...state,
-        posts: [...state.posts, action.payload],
+        items: [...state.items, action.payload],
       };
+    case HYDRATE: {
+      return { ...state, ...action.payload.posts };
+    }
     default:
       return state;
   }
 };
+
+export default posts;

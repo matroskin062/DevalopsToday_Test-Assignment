@@ -14,14 +14,13 @@ export const setPosts = (payload: IPost[]): ISetPostAction => ({
   payload,
 });
 
-const addPost = (payload: IPost): IAddPostAction => ({
+export const addPost = (payload: IPost): IAddPostAction => ({
   type: ADD_POSTS,
   payload,
 });
 
 export const getPosts = (): Thunk => async (dispatch) => {
   const posts = await getAllPosts();
-
   dispatch(setPosts(posts));
 };
 
