@@ -18,6 +18,9 @@ export const Image = styled.img`
   display: block;
   width: 50%;
   margin: 0 auto;
+  @media(max-width: 768px){
+    width: 70%
+  }
 `;
 
 export const Comments = styled.div`

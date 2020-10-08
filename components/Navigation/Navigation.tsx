@@ -4,7 +4,11 @@ import styled from 'styled-components';
 
 export const Nav = styled.div`
   background-color: black;
-  padding: 10px 0;
+  padding: 15px 0;
+  width: 100%;
+  @media(max-width: 768px){
+    text-align: center;
+  }
 `;
 
 export const NavItem = styled.a`

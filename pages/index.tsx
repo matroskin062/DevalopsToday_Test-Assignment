@@ -11,11 +11,21 @@ export const PostList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
+  
+  @media(max-width:960px){
+    &{
+      grid-template-columns: 1fr 1fr ;
+    } 
+  }
+  @media(max-width:600px){
+    &{
+      display: block;
+    }
+  }
 `;
 
 export const PostItem = styled.div`
   padding: 10px;
-  display: grid;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   margin-bottom: 20px;
   border-radius: 5px;
