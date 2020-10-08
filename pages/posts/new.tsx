@@ -2,16 +2,38 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import MainLayout from '../../components/MainLayout/MainLayout';
-import { IPost } from '../../interfaces/interfaces';
-import { addNewPost, addPost } from '../../store/actions/actions';
-import { Button, Input, Textarea } from '../../styles/NewPostStyle';
+import { IPost } from '../../types/types';
+import { addNewPost } from '../../store/actions/actions';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import Button from '../../components/Button/Button';
+import styled from 'styled-components';
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px 10px;
+  border: none;
+  border-bottom: 1px solid gray;
+  outline: none;
+  margin-bottom: 20px;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 10px;
+  min-height: 200px;
+  resize: none;
+  padding: 20px;
+  font-size: 14px;
+  font-family: sans-serif;
+  margin: 10px 0;
+`;
 
 const schema = yup.object().shape({
-  title: yup.string().required().min(5, 'minimum 5'),
-  body: yup.string().required().min(5, 'minimum 5'),
+  title: yup.string().required().min(5, 'Minimum 5 characters'),
+  body: yup.string().required().min(5, 'Minimum 5 characters'),
 });
 
 const NewPost = () => {
@@ -41,7 +63,7 @@ const NewPost = () => {
             placeholder='Enter post body'
           ></Textarea>
           <p>{errors.body?.message}</p>
-          <Button type='submit'>Submit</Button>
+          <Button>Submit</Button>
         </form>
       </div>
     </MainLayout>
