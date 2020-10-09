@@ -67,6 +67,17 @@ const InputGroup = styled.form`
   padding: 10px 0px;
 `;
 
+const PostTitle = styled.h1`
+  margin-bottom: 20px;
+`;
+
+const PostBody = styled.p`
+  text-align: justify;
+  font-size: 18px;
+  padding: 20px;
+  line-height: 28px;
+`;
+
 type FormInputType = {
   body: string;
 };
@@ -96,39 +107,41 @@ const Post: NextPage<{ postId: number }> = ({ postId }) => {
     reset();
   };
 
+  if (!post) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <MainLayout>
-      {post && (
-        <>
-          <Head>
-            <title>{post.title || 'Untitiled'}</title>
-          </Head>
-          <PostContent>
-            <h1>{post.title}</h1>
-            <p>{post.body}</p>
-          </PostContent>
-          <Image src='../assets/img.jpg' alt='image' />
-          <Comments>
-            <h3>{post.comments.length} Comments</h3>
-            <InputGroup onSubmit={handleSubmit(sendComment)}>
-              <Input
-                type='text'
-                name='body'
-                ref={register}
-                placeholder='Join the discussion...'
-              />
-              <Button>Send</Button>
-            </InputGroup>
-            <InputError>{errors.body?.message}</InputError>
-            {post.comments?.map((el: IComment) => (
-              <Comment key={el.id}>
-                <User>{el.id}</User>
-                <p>{el.body}</p>
-              </Comment>
-            ))}
-          </Comments>
-        </>
-      )}
+      <Head>
+        <title>{post.title || 'Untitiled'}</title>
+      </Head>
+      <PostContent>
+        <PostTitle>{post.title}</PostTitle>
+        <PostBody>{post.body}</PostBody>
+      </PostContent>
+      <Image src='../assets/img.jpg' alt='image' />
+      <Comments>
+        <h3>{post.comments.length} Comments</h3>
+        <InputGroup onSubmit={handleSubmit(sendComment)}>
+          <Input
+            type='text'
+            name='body'
+            ref={register}
+            placeholder='Join the discussion...'
+          />
+          <Button>Send</Button>
+        </InputGroup>
+        <InputError>{errors.body?.message}</InputError>
+        {post.comments
+          ?.sort((a, b) => b.id - a.id)
+          .map((el: IComment) => (
+            <Comment key={el.id}>
+              <User>{el.id}</User>
+              <p>{el.body}</p>
+            </Comment>
+          ))}
+      </Comments>
     </MainLayout>
   );
 };

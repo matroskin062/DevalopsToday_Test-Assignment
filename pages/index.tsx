@@ -49,6 +49,7 @@ export const PostTitle = styled.p`
   font-weight: bold;
   border-bottom: 1px solid transparent;
   padding: 10px 0;
+  margin-bottom: 10px;
 `;
 
 export const Image = styled.img`
@@ -67,11 +68,24 @@ export const PostLink = styled.a`
   }
 `;
 
-export const PostActions = styled.div`
+const PostActions = styled.div`
   padding: 10px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const PostBody = styled.p`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow-y: hidden;
+  margin-bottom: 10px;
+`;
+
+const Title = styled.h1`
+  padding: 20px 0;
+  text-align: center;
 `;
 
 export default function Home() {
@@ -87,6 +101,7 @@ export default function Home() {
       <Head>
         <title>Home</title>
       </Head>
+      <Title>Latest Posts</Title>
       <PostList>
         {items
           ?.sort((b, a) => a.id - b.id)
@@ -94,6 +109,7 @@ export default function Home() {
             <PostItem key={el.id + el.title}>
               <Image src='assets/img.jpg' alt='image' />
               <PostTitle>{el.title}</PostTitle>
+              <PostBody>{el.body}</PostBody>
               <PostActions>
                 <Link
                   href='/posts/[postId]'

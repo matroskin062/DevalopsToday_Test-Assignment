@@ -48,7 +48,8 @@ const schema = yup.object().shape({
     .string()
     .trim()
     .required('Please enter post title')
-    .min(5, 'Minimum 5 characters'),
+    .min(5, 'Minimum 5 characters')
+    .max(65, 'Your title too long (maximum 65 characters)'),
   body: yup
     .string()
     .trim()
