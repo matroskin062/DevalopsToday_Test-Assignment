@@ -50,6 +50,11 @@ export interface ISetCommentAction {
   payload: IComment;
 }
 
+export interface IDeletePostAction {
+  type: typeof Types.DELETE_POST;
+  id: string | string[];
+}
+
 export type Thunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
@@ -62,4 +67,5 @@ export type ActionTypes =
   | IAddPostAction
   | IHydrateAction
   | ISetPostsAction
-  | ISetCommentAction;
+  | ISetCommentAction
+  | IDeletePostAction;

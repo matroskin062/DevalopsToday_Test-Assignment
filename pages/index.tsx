@@ -1,24 +1,25 @@
 import Link from 'next/link';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MainLayout from '../components/MainLayout/MainLayout';
 import { IPost } from '../types/types';
-import { getPosts } from '../store/actions/actions';
+import { deletePost, getPosts } from '../store/actions/actions';
 import { RootState, wrapper } from '../store/store';
 import styled from 'styled-components';
+import Button from '../components/Button/Button';
 
 export const PostList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
-  
-  @media(max-width:960px){
-    &{
-      grid-template-columns: 1fr 1fr ;
-    } 
+
+  @media (max-width: 960px) {
+    & {
+      grid-template-columns: 1fr 1fr;
+    }
   }
-  @media(max-width:600px){
-    &{
+  @media (max-width: 600px) {
+    & {
       display: block;
     }
   }
@@ -29,13 +30,13 @@ export const PostItem = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   margin-bottom: 20px;
   border-radius: 5px;
-  transition: 0.3s all;
-  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   &:hover {
-    color: #023047;
-  }
-  &:hover > p {
-    border-bottom: 1px solid black;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   }
 `;
 
@@ -46,6 +47,7 @@ export const PostTitle = styled.p`
   font-size: 18px;
   font-weight: bold;
   border-bottom: 1px solid transparent;
+  padding: 10px 0;
 `;
 
 export const Image = styled.img`
@@ -54,24 +56,56 @@ export const Image = styled.img`
   border-radius: 5px;
 `;
 
+export const PostLink = styled.a`
+  cursor: pointer;
+  color: #e07a5f;
+  border-bottom: 1px solid transparent;
+  transition: 0.2s all;
+  &:hover {
+    border-bottom: 1px solid #e07a5f;
+  }
+`;
+
+export const PostActions = styled.div`
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export default function Home() {
   const { items } = useSelector(({ posts }: RootState) => posts);
+  const dispatch = useDispatch();
+
+  const handleDelete = (id: string) => {
+    dispatch(deletePost(id));
+  };
+
   return (
     <MainLayout>
       <PostList>
         {items
           ?.sort((b, a) => a.id - b.id)
           .map((el: IPost) => (
-            <Link
-              href='/posts/[postId]'
-              as={`/posts/${el.id}`}
-              key={el.id + el.title}
-            >
-              <PostItem>
-                <Image src='assets/img.jpg' alt='image' />
-                <PostTitle>{el.title}</PostTitle>
-              </PostItem>
-            </Link>
+            <PostItem>
+              <Image src='assets/img.jpg' alt='image' />
+              <PostTitle>{el.title}</PostTitle>
+              <PostActions>
+                <Link
+                  href='/posts/[postId]'
+                  as={`/posts/${el.id}`}
+                  key={el.id + el.title}
+                >
+                  <PostLink>Read Post &rarr;</PostLink>
+                </Link>
+                <Button
+                  handleClick={() => handleDelete(String(el.id))}
+                  btnType='danger'
+                >
+                  Delete Post
+                </Button>
+              </PostActions>
+            </PostItem>
           ))}
       </PostList>
     </MainLayout>

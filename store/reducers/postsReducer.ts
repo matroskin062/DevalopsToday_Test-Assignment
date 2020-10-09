@@ -18,6 +18,11 @@ const posts = (state = initialState, action: ActionTypes): IPostsState => {
     case HYDRATE: {
       return { ...state, ...action.payload.posts };
     }
+    case Types.DELETE_POST:
+      return {
+        ...state,
+        items: state.items.filter((item) => item.id !== Number(action.id)),
+      };
     default:
       return state;
   }

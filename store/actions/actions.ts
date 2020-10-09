@@ -1,9 +1,14 @@
-import { IComment, ISetCommentAction } from './../../types/types';
+import {
+  IComment,
+  ISetCommentAction,
+  IDeletePostAction,
+} from './../../types/types';
 import {
   createPost,
   fetchAllPosts,
   fetchPost,
   createComment,
+  deletePostReq,
 } from './../../api/api';
 import {
   IAddPostAction,
@@ -54,4 +59,16 @@ const setComment = (payload: IComment): ISetCommentAction => ({
 export const addComment = (newComment: IComment): Thunk => async (dispatch) => {
   const comment = await createComment(newComment);
   dispatch(setComment(comment));
+};
+
+const removePost = (id: string | string[]): IDeletePostAction => ({
+  type: Types.DELETE_POST,
+  id,
+});
+
+export const deletePost = (id: string | string[]): Thunk => async (
+  dispatch
+) => {
+  await deletePostReq(id);
+  dispatch(removePost(id));
 };

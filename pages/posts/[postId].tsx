@@ -25,6 +25,8 @@ const Image = styled.img`
   display: block;
   width: 50%;
   margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   @media (max-width: 768px) {
     width: 70%;
   }
@@ -32,10 +34,16 @@ const Image = styled.img`
 
 const Comments = styled.div`
   padding: 20px 10px;
+  max-width: 800px;
+  margin: 10px auto;
 `;
 
 const Comment = styled.div`
-  padding: 20px 0;
+  padding: 20px 10px;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `;
 
 const User = styled.p`
@@ -43,9 +51,10 @@ const User = styled.p`
 `;
 
 const Input = styled.input`
-  width: 50%;
+  width: 100%;
   margin-right: 10px;
-  border: 1px solid gray;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   border-radius: 10px;
   outline: none;
   font-size: 100%;
@@ -65,13 +74,13 @@ const Post: NextPage<{ postId: number }> = ({ postId }) => {
   const { post } = useSelector((state: RootState) => state.curPost);
   const dispatch = useDispatch();
 
-  const { register, errors, handleSubmit } = useForm<FormInputType>({
+  const { register, errors, handleSubmit, reset } = useForm<FormInputType>({
     resolver: yupResolver(
       yup.object().shape({
         body: yup
           .string()
           .trim()
-          .required('This field required')
+          .required('Please, enter comment text')
           .max(65, 'Your message too long'),
       })
     ),
@@ -82,8 +91,8 @@ const Post: NextPage<{ postId: number }> = ({ postId }) => {
       postId: Number(postId),
       body: data.body,
     };
-
     dispatch(addComment(comment));
+    reset();
   };
 
   return (

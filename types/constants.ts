@@ -3,4 +3,5 @@ export enum Types {
   ADD_POSTS = 'ADD_POSTS',
   SET_POST = 'SET_POST',
   SET_COMMENT = 'SET_COMMENT',
+  DELETE_POST = 'DELETE_POST',
 }

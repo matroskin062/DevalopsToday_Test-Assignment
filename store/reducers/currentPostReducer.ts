@@ -22,7 +22,6 @@ export const currentPostReducer = (
           comments: [...state.post.comments, action.payload],
         },
       };
-
     case HYDRATE:
       return { ...state, ...action.payload.curPost };
     default:

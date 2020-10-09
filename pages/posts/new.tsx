@@ -15,20 +15,25 @@ const Input = styled.input`
   width: 100%;
   padding: 10px 10px;
   border: none;
-  border-bottom: 1px solid gray;
   outline: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  font-size: 100%;
 `;
 
 const Textarea = styled.textarea`
   width: 100%;
-  border: 1px solid gray;
+  outline: none;
+  border: none;
   border-radius: 10px;
   min-height: 200px;
   resize: none;
   padding: 20px;
   font-size: 14px;
-  font-family: sans-serif;
+  font-family: 'Montserrat';
   margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `;
 
 const Title = styled.h1`
@@ -38,8 +43,16 @@ const Title = styled.h1`
 `;
 
 const schema = yup.object().shape({
-  title: yup.string().trim().required().min(5, 'Minimum 5 characters'),
-  body: yup.string().trim().required().min(5, 'Minimum 5 characters'),
+  title: yup
+    .string()
+    .trim()
+    .required('Please enter post title')
+    .min(5, 'Minimum 5 characters'),
+  body: yup
+    .string()
+    .trim()
+    .required('Please enter post body')
+    .min(5, 'Minimum 5 characters'),
 });
 
 const NewPost = () => {
@@ -61,7 +74,7 @@ const NewPost = () => {
         <Title>Create New Post</Title>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor={'title'}>Post title</label>
-          <Input name='title' ref={register} />
+          <Input name='title' ref={register} placeholder='Enter post title' />
           <InputError>{errors.title?.message}</InputError>
           <label htmlFor='body'>Post Body</label>
           <Textarea
