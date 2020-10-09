@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import Button from '../../components/Button/Button';
 import styled from 'styled-components';
 import InputError from '../../components/InputError/InputError';
+import Head from 'next/head';
 
 const Input = styled.input`
   width: 100%;
@@ -70,6 +71,9 @@ const NewPost = () => {
 
   return (
     <MainLayout>
+      <Head>
+        <title>Create new post</title>
+      </Head>
       <div>
         <Title>Create New Post</Title>
         <form onSubmit={handleSubmit(onSubmit)}>

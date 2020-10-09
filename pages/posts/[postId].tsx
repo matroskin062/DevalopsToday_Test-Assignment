@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import MainLayout from '../../components/MainLayout/MainLayout';
 import { IComment } from '../../types/types';
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import InputError from '../../components/InputError/InputError';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Head from 'next/head';
 
 const PostContent = styled.div`
   max-width: 800px;
@@ -99,6 +100,9 @@ const Post: NextPage<{ postId: number }> = ({ postId }) => {
     <MainLayout>
       {post && (
         <>
+          <Head>
+            <title>{post.title || 'Untitiled'}</title>
+          </Head>
           <PostContent>
             <h1>{post.title}</h1>
             <p>{post.body}</p>

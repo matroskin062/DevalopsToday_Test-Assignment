@@ -7,6 +7,7 @@ import { deletePost, getPosts } from '../store/actions/actions';
 import { RootState, wrapper } from '../store/store';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
+import Head from 'next/head';
 
 export const PostList = styled.div`
   display: grid;
@@ -83,11 +84,14 @@ export default function Home() {
 
   return (
     <MainLayout>
+      <Head>
+        <title>Home</title>
+      </Head>
       <PostList>
         {items
           ?.sort((b, a) => a.id - b.id)
           .map((el: IPost) => (
-            <PostItem>
+            <PostItem key={el.id + el.title}>
               <Image src='assets/img.jpg' alt='image' />
               <PostTitle>{el.title}</PostTitle>
               <PostActions>
