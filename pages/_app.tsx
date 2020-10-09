@@ -1,8 +1,8 @@
 import Router, { AppProps } from 'next/dist/next-server/lib/router/router';
 import { wrapper } from '../store/store';
-import '../styles/globals.css';
 import NProgress from 'nprogress'; //nprogress module
-import 'nprogress/nprogress.css';
+// import 'nprogress/nprogress.css';
+import '../styles/globals.css';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
