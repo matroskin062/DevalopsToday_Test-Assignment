@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Button from '../../components/Button/Button';
 import styled from 'styled-components';
+import InputError from '../../components/InputError/InputError';
 
 const Input = styled.input`
   width: 100%;
@@ -16,7 +17,6 @@ const Input = styled.input`
   border: none;
   border-bottom: 1px solid gray;
   outline: none;
-  margin-bottom: 20px;
 `;
 
 const Textarea = styled.textarea`
@@ -28,12 +28,18 @@ const Textarea = styled.textarea`
   padding: 20px;
   font-size: 14px;
   font-family: sans-serif;
-  margin: 10px 0;
+  margin-top: 10px;
+`;
+
+const Title = styled.h1`
+  padding: 20px 0px;
+  display: flex;
+  justify-content: center;
 `;
 
 const schema = yup.object().shape({
-  title: yup.string().required().min(5, 'Minimum 5 characters'),
-  body: yup.string().required().min(5, 'Minimum 5 characters'),
+  title: yup.string().trim().required().min(5, 'Minimum 5 characters'),
+  body: yup.string().trim().required().min(5, 'Minimum 5 characters'),
 });
 
 const NewPost = () => {
@@ -52,18 +58,19 @@ const NewPost = () => {
   return (
     <MainLayout>
       <div>
+        <Title>Create New Post</Title>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor={'title'}>Post title</label>
           <Input name='title' ref={register} />
-          <p>{errors.title?.message}</p>
+          <InputError>{errors.title?.message}</InputError>
           <label htmlFor='body'>Post Body</label>
           <Textarea
             name='body'
             ref={register}
             placeholder='Enter post body'
           ></Textarea>
-          <p>{errors.body?.message}</p>
-          <Button>Submit</Button>
+          <InputError>{errors.body?.message}</InputError>
+          <Button>Create</Button>
         </form>
       </div>
     </MainLayout>

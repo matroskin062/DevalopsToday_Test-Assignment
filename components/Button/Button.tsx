@@ -20,7 +20,11 @@ const StyledButton = styled.button`
 `;
 
 const Button: React.FC<ButtonProps> = ({ children, handleClick }) => {
-  return <StyledButton onClick={handleClick}>{children}</StyledButton>;
+  return (
+    <StyledButton type='submit' onClick={handleClick}>
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;
