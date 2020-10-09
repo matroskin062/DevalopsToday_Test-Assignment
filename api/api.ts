@@ -1,21 +1,30 @@
-import { IPost } from '../types/types';
+import { IComment, IPost } from '../types/types';
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: 'https://simple-blog-api.crew.red/',
 });
 
-export const getAllPosts = async (): Promise<IPost[]> => {
+export const fetchAllPosts = async (): Promise<IPost[]> => {
   const { data } = await api.get('posts/');
   return data;
 };
 
-export const getPost = async (postId: string | string[]): Promise<IPost> => {
-  const { data } = await api.get(`posts/${postId}?_embed=comments`);
+export const fetchPost = async (postId: string | string[]): Promise<IPost> => {
+  const { data } = await api.get(`posts/${postId}`, {
+    params: {
+      _embed: 'comments',
+    },
+  });
   return data;
 };
 
-export const addPost = async (post: IPost): Promise<IPost> => {
+export const createPost = async (post: IPost): Promise<IPost> => {
   const { data } = await api.post('posts/', post);
+  return data;
+};
+
+export const createComment = async (comment: IComment): Promise<IComment> => {
+  const { data } = await api.post('comments/', comment);
   return data;
 };

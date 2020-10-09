@@ -11,17 +11,21 @@ export interface IPost {
   comments: IComment[];
 }
 
+export interface IPostState {
+  post: IPost;
+}
+
 export interface IPostsState {
   items: IPost[];
 }
 
 export interface IComment {
   body: string;
-  id: number;
+  id?: number;
   postId: number;
 }
 
-export interface ISetPostAction {
+export interface ISetPostsAction {
   type: typeof Types.SET_POSTS;
   payload: IPost[];
 }
@@ -36,6 +40,16 @@ export interface IHydrateAction {
   payload: any;
 }
 
+export interface ISetPostAction {
+  type: typeof Types.SET_POST;
+  payload: IPost;
+}
+
+export interface ISetCommentAction {
+  type: typeof Types.SET_COMMENT;
+  payload: IComment;
+}
+
 export type Thunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
@@ -43,4 +57,9 @@ export type Thunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-export type ActionTypes = ISetPostAction | IAddPostAction | IHydrateAction;
+export type ActionTypes =
+  | ISetPostAction
+  | IAddPostAction
+  | IHydrateAction
+  | ISetPostsAction
+  | ISetCommentAction;
