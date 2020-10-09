@@ -45,7 +45,7 @@ const Navigation = () => {
           <NavItem>Create new post</NavItem>
         </Link>
       </Menu>
-      <Title>Test Assessment for DevelopsToday</Title>
+      <Title>Test Assignment for DevelopsToday</Title>
     </Nav>
   );
 };
